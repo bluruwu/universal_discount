@@ -15,7 +15,7 @@ class KsGlobalDiscountSales(models.Model):
     ks_global_discount_rate = fields.Float('Universal Discount',
                                            readonly=True,
                                            states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
-    ks_amount_discount = fields.Monetary(string='Universal Discount', readonly=True, compute='_amount_all', store=True,
+    ks_amount_discount = fields.Monetary(string='Universal Discount', readonly=True, compute='_compute_amounts', store=True,
                                          track_visibility='always')
     ks_enable_discount = fields.Boolean(compute='ks_verify_discount')
 
@@ -24,12 +24,14 @@ class KsGlobalDiscountSales(models.Model):
         for rec in self:
             rec.ks_enable_discount = rec.company_id.ks_enable_discount
 
-    @api.depends('order_line.price_total', 'ks_global_discount_rate', 'ks_global_discount_type')
-    def _amount_all(self):
-        res = super(KsGlobalDiscountSales, self)._amount_all()
+    @api.onchange("ks_global_discount_rate", "ks_global_discount_type")
+    @api.depends(
+        "order_line.price_total", "ks_global_discount_rate", "ks_global_discount_type"
+    )
+    def _compute_amounts(self):
+        res = super(KsGlobalDiscountSales, self)._compute_amounts()
         for rec in self:
-            if not ('ks_global_tax_rate' in rec):
-                rec.ks_calculate_discount()
+            rec.ks_calculate_discount()
         return res
 
     # @api.multi

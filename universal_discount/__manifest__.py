@@ -3,7 +3,7 @@
     'name': "Universal Discount",
 
     'summary': """
-        Universal Discount v15.0""",
+        Universal Discount v16.0""",
 
     'description': """
         - Apply a field in Sales, Purchase and Invoice module to calculate discount after the order lines are inserted.
@@ -50,7 +50,6 @@
     'assets': {
         'web.assets_frontend': ['universal_discount/static/css/ks_stylesheet.css'],
     },
-
     'data': [
         'views/ks_sale_order.xml',
         'views/ks_account_invoice.xml',

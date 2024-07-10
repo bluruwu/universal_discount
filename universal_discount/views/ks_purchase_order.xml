@@ -18,7 +18,7 @@
                     </div>
                 </xpath>
 <!--                <xpath expr="//field[@name='amount_tax']" position="after">-->
-                <xpath expr="//field[@name='tax_totals_json']" position="after">
+                <xpath expr="//field[@name='tax_totals']" position="after">
                     <field name="ks_amount_discount" attrs="{'invisible':[('ks_enable_discount','!=',True),('ks_amount_discount','=',0)]}" />
                 </xpath>
             </field>
