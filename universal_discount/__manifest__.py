@@ -3,7 +3,7 @@
     'name': "Universal Discount",
 
     'summary': """
-        Universal Discount v16.0""",
+        Universal Discount v17.0""",
 
     'description': """
         - Apply a field in Sales, Purchase and Invoice module to calculate discount after the order lines are inserted.
