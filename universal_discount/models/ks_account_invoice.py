@@ -87,9 +87,9 @@ class KsGlobalDiscountInvoice(models.Model):
             already_exists = self.line_ids.filtered(
                 lambda line: line.name and line.name.find('Universal Discount') == 0)
             terms_lines = self.line_ids.filtered(
-                lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+                lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
             other_lines = self.line_ids.filtered(
-                lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
+                lambda line: line.account_id.account_type not in ('asset_receivable', 'liability_payable'))
             if already_exists:
                 amount = rec.ks_amount_discount
                 if rec.ks_sales_discount_account_id \
@@ -187,7 +187,7 @@ class KsGlobalDiscountInvoice(models.Model):
                     #            if self._origin.id
                     #            else (self.display_name))
                     terms_lines = self.line_ids.filtered(
-                        lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+                        lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
                     already_exists = self.line_ids.filtered(
                         lambda line: line.name and line.name.find('Universal Discount') == 0)
                     if already_exists:
@@ -310,9 +310,9 @@ class KsGlobalDiscountInvoice(models.Model):
                     if in_draft_mode:
                         # Update the payement account amount
                         terms_lines = self.line_ids.filtered(
-                            lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+                            lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
                         other_lines = self.line_ids.filtered(
-                            lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
+                            lambda line: line.account_id.account_type not in ('asset_receivable', 'liability_payable'))
                         total_balance = sum(other_lines.mapped('balance'))
                         total_amount_currency = sum(other_lines.mapped('amount_currency'))
                         for record in terms_lines:
@@ -333,9 +333,9 @@ class KsGlobalDiscountInvoice(models.Model):
                                 })
                     else:
                         terms_lines = self.line_ids.filtered(
-                            lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+                            lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
                         other_lines = self.line_ids.filtered(
-                            lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
+                            lambda line: line.account_id.account_type not in ('asset_receivable', 'liability_payable'))
                         already_exists = self.line_ids.filtered(
                             lambda line: line.name and line.name.find('Universal Discount') == 0)
                         total_balance = sum(other_lines.mapped('balance')) + amount
@@ -379,9 +379,9 @@ class KsGlobalDiscountInvoice(models.Model):
                 if already_exists:
                     self.line_ids -= already_exists
                     terms_lines = self.line_ids.filtered(
-                        lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))
+                        lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
                     other_lines = self.line_ids.filtered(
-                        lambda line: line.account_id.user_type_id.type not in ('receivable', 'payable'))
+                        lambda line: line.account_id.account_type not in ('asset_receivable', 'liability_payable'))
                     total_balance = sum(other_lines.mapped('balance'))
                     total_amount_currency = sum(other_lines.mapped('amount_currency'))
                     terms_lines.update({
