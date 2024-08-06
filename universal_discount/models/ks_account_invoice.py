@@ -6,16 +6,15 @@ class KsGlobalDiscountInvoice(models.Model):
     # _inherit = "account.invoice"
     """ changing the model to account.move """
     _inherit = "account.move"
-
     ks_global_discount_type = fields.Selection([
         ('percent', 'Percentage'),
         ('amount', 'Amount')],
         string='Universal Discount Type',
         default='percent')
     ks_global_discount_rate = fields.Float('Universal Discount')
-    ks_amount_discount = fields.Monetary(string='Universal Discount',
+    ks_amount_discount = fields.Monetary(string='Universal Discount', 
                                          compute='_compute_amount',
-                                         store=True, track_visibility='always')
+                                         store=True, tracking=True)
     ks_enable_discount = fields.Boolean(compute='ks_verify_discount')
     ks_sales_discount_account_id = fields.Integer(compute='ks_verify_discount')
     ks_purchase_discount_account_id = fields.Integer(compute='ks_verify_discount')

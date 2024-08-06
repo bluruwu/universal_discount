@@ -11,8 +11,8 @@ class KsGlobalDiscountSales(models.Model):
                                                string='Universal Discount Type',
                                                default='percent')
     ks_global_discount_rate = fields.Float('Universal Discount')
-    ks_amount_discount = fields.Monetary(string='Universal Discount', compute='_compute_amounts', store=True,
-                                         track_visibility='always')
+    ks_amount_discount = fields.Monetary(string='Universal Discount', readonly=True, compute='_amount_all', store=True,
+                                         tracking=True)
     ks_enable_discount = fields.Boolean(compute='ks_verify_discount')
 
     @api.depends('company_id.ks_enable_discount')
